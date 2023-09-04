@@ -14,7 +14,7 @@
   <body>
     <style>
     body{
-      background-color: #d9d3e1  ; 
+      background-color: #fafafa  ; 
     }  
     input[class=form-control] {
   width: 40%;
@@ -49,34 +49,56 @@
 
         // Create a message to display
         var message = "Name: " + name +  "   " ;
-        message+= "Gender: " + gender + "    ";
+        message += "gender: " + gender + "  ";
         message += "Email: " + email +  "   ";
         message += "Phoner: " + contactNumber +  "   " ;
         message += "Address: " + address ;
         
-            // Display the information
-            // document.getElementById("displayInfo").innerHTML = message;
-            // document.getElementById("Warning").innerHTML = message;/
-            alert(message);
+      const radioButtons = document.querySelectorAll('input[type="radio"][name="gender"]');
 
+//  radio buttons , set checked to false
+radioButtons.forEach(function(radioButton) {
+    radioButton.checked = false;
+});
+            alert(message);
         }
+
+        function isValidEmail(email) {
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            return emailPattern.test(email);
+        }
+
+        document.getElementById("email").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const emailInput = document.getElementById("email");
+            const validationResult = document.getElementById("validationResult");
+
+            const email = emailInput.value;
+
+            if (isValidEmail(email)) {
+                validationResult.textContent = "Valid email address.";
+                validationResult.style.color = "green";
+            } else {
+                validationResult.textContent = "Invalid email address.";
+                validationResult.style.color = "red";
+            }
+        });   
     </script>
 
   
      
   <div class="container-sm" style="text-align: center;">
     <h2>Contact Form </h2>
-
    <br>
-    <form>
 
+    <form>
       <div class="mb-3">
         <label for="exampleInputName" class="form-label">Full Name</label>
         <input type="name" class="form-control" id="name" aria-describedby="emailHelp" >
       </div>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="name" class="form-control" id="email" aria-describedby="emailHelp" >
+    <input type="email" id="email" name="email" class="form-control" required>
     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
   </div>
   <div class="mb-3">
@@ -86,7 +108,8 @@
     
     <input type="radio" id="male" name="gender" value="male"> Male
     <input type="radio" id="female" name="gender" value="female"> Female
-    <br><br>
+    <input type="radio" id="other" name="gender" value="Other"> Other<br><br>
+
   <div class="mb-3">
     <label for="exampleInputAdderess" class="form-label">Adderess</label><br>
     <textarea rows="4" cols="70" id="address"></textarea>
